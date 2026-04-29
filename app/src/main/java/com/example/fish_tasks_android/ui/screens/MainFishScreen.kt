@@ -3,12 +3,14 @@ package com.example.fish_tasks_android.ui.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +36,10 @@ fun MainFishScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                    titleContentColor = Color.Black,
+                ),
                 title = {
                     Column {
                         Text(stringResource(R.string.app_name), style = MaterialTheme.typography.titleLarge)
@@ -42,7 +48,7 @@ fun MainFishScreen(
                 },
                 actions = {
                     IconButton(onClick = { navController.navigate("settings") }) {
-                        Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.alert_settings))
+                        Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.alert_settings), tint = Color.Gray)
                     }
                     val activeCount = tasks.count { it.status == "active" }
                     val activeText = if (activeCount == 1) {
@@ -50,7 +56,18 @@ fun MainFishScreen(
                     } else {
                         stringResource(R.string.active_count_plural, activeCount)
                     }
-                    Badge { Text(activeText) }
+                    Surface(
+                        color = Color.Red,
+                        shape = CircleShape,
+                        modifier = Modifier.padding(end = 8.dp)
+                    ) {
+                        Text(
+                            text = activeText,
+                            color = Color.White,
+                            style = MaterialTheme.typography.labelSmall,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                        )
+                    }
                 }
             )
         },

@@ -176,10 +176,10 @@ fun PriorityChoice(
     modifier: Modifier = Modifier
 ) {
     val fishRes = when (priorityName) {
-        "low" -> R.drawable.blue_fish_profile
-        "medium" -> R.drawable.red_fish_profile
-        "high" -> R.drawable.gold_fish_profile
-        else -> R.drawable.blue_fish_profile
+        "low" -> R.drawable.fish_row3
+        "medium" -> R.drawable.fish_row2
+        "high" -> R.drawable.fish_row0
+        else -> R.drawable.fish_row3
     }
     val fishTitle = when (priorityName) {
         "low" -> stringResource(R.string.blue_fish)

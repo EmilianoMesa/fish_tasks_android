@@ -91,7 +91,10 @@ fun Arena(
 
         // Fisherman in the center
         Image(
-            painter = painterResource(R.drawable.fisherman),
+            painter = rememberAsyncImagePainter(
+                ImageRequest.Builder(context).data(R.drawable.fisherman_anim).build(),
+                imageLoader = imageLoader
+            ),
             contentDescription = null,
             modifier = Modifier
                 .size(60.dp)
@@ -107,6 +110,7 @@ fun Arena(
                 task = task,
                 progress = progress,
                 settings = settings,
+                imageLoader = imageLoader,
                 modifier = Modifier
                     .offset(
                         x = (point.first * maxWidth.value / 100).dp - 20.dp,
@@ -141,15 +145,17 @@ fun FishSprite(
     task: Task,
     progress: Float,
     settings: AppSettings,
+    imageLoader: ImageLoader,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val fishRes = when (task.priority) {
-        "low" -> R.drawable.blue_fish_profile
-        "medium" -> R.drawable.red_fish_profile
-        "high" -> R.drawable.gold_fish_profile
-        else -> R.drawable.blue_fish_profile
+        "low" -> R.drawable.fish_row3
+        "medium" -> R.drawable.fish_row2
+        "high" -> R.drawable.fish_row0
+        else -> R.drawable.fish_row3
     }
-
+    
     val isAlert = when (task.priority) {
         "low" -> settings.alertLow
         "medium" -> settings.alertMedium
@@ -159,7 +165,10 @@ fun FishSprite(
 
     Box(modifier = modifier) {
         Image(
-            painter = painterResource(fishRes),
+            painter = rememberAsyncImagePainter(
+                ImageRequest.Builder(context).data(fishRes).build(),
+                imageLoader = imageLoader
+            ),
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
         )
