@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.fish_tasks_android.R
 import com.example.fish_tasks_android.data.AppSettings
 import com.example.fish_tasks_android.model.Task
@@ -121,7 +122,11 @@ fun TaskRowContent(
                     "high" -> R.drawable.fish_row0
                     else -> R.drawable.fish_row3
                 }
-                Image(painter = painterResource(fishRes), contentDescription = null, modifier = Modifier.fillMaxSize())
+                AsyncImage(
+                    model = fishRes,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 
             Spacer(modifier = Modifier.width(12.dp))

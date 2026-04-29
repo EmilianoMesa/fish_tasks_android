@@ -17,8 +17,8 @@ import com.example.fish_tasks_android.R
 import com.example.fish_tasks_android.ui.screens.*
 
 sealed class Screen(val route: String, val titleRes: Int, val iconRes: Int) {
-    object Fish : Screen("fish", R.string.go_fish, R.drawable.fish_row0)
-    object Stats : Screen("stats", R.string.stats, R.drawable.fisherman_anim)
+    object Fish : Screen("fish", R.string.go_fish, R.drawable.blue_fish_profile)
+    object Stats : Screen("stats", R.string.stats, R.drawable.fisherman)
     object History : Screen("history", R.string.history, R.drawable.back_arrow)
 }
 

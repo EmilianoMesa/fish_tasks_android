@@ -21,11 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.ImageLoader
-import coil.compose.rememberAsyncImagePainter
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.request.ImageRequest
+import coil.compose.AsyncImage
 import com.example.fish_tasks_android.R
 import com.example.fish_tasks_android.data.AppSettings
 import com.example.fish_tasks_android.model.Task
@@ -39,17 +35,6 @@ fun Arena(
     onFishLongClick: (String) -> Unit
 ) {
     val context = LocalContext.current
-    val imageLoader = remember {
-        ImageLoader.Builder(context)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-    }
 
     BoxWithConstraints(
         modifier = Modifier
@@ -61,11 +46,8 @@ fun Arena(
         val height = constraints.maxHeight
 
         // Background GIF
-        Image(
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(context).data(R.drawable.background_loop).build(),
-                imageLoader = imageLoader
-            ),
+        AsyncImage(
+            model = R.drawable.background_loop,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -90,11 +72,8 @@ fun Arena(
         )
 
         // Fisherman in the center
-        Image(
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(context).data(R.drawable.fisherman_anim).build(),
-                imageLoader = imageLoader
-            ),
+        AsyncImage(
+            model = R.drawable.fisherman_anim,
             contentDescription = null,
             modifier = Modifier
                 .size(60.dp)
@@ -110,7 +89,6 @@ fun Arena(
                 task = task,
                 progress = progress,
                 settings = settings,
-                imageLoader = imageLoader,
                 modifier = Modifier
                     .offset(
                         x = (point.first * maxWidth.value / 100).dp - 20.dp,
@@ -145,10 +123,8 @@ fun FishSprite(
     task: Task,
     progress: Float,
     settings: AppSettings,
-    imageLoader: ImageLoader,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
     val fishRes = when (task.priority) {
         "low" -> R.drawable.fish_row3
         "medium" -> R.drawable.fish_row2
@@ -164,11 +140,8 @@ fun FishSprite(
     } && (progress * 100) >= settings.alertThreshold
 
     Box(modifier = modifier) {
-        Image(
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(context).data(fishRes).build(),
-                imageLoader = imageLoader
-            ),
+        AsyncImage(
+            model = fishRes,
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
         )

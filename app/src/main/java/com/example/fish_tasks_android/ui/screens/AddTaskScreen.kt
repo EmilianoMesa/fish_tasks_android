@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.fish_tasks_android.FishViewModel
 import com.example.fish_tasks_android.R
 import java.text.SimpleDateFormat
@@ -199,7 +200,11 @@ fun PriorityChoice(
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(painter = painterResource(fishRes), contentDescription = null, modifier = Modifier.size(40.dp))
+        AsyncImage(
+            model = fishRes,
+            contentDescription = null,
+            modifier = Modifier.size(40.dp)
+        )
         Text(fishTitle, fontSize = 10.sp, fontWeight = FontWeight.Bold)
     }
 }
