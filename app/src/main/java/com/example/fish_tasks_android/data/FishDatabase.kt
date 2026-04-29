@@ -17,6 +17,7 @@ abstract class FishDatabase : RoomDatabase() {
         fun getDatabase(context: Context): FishDatabase {
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, FishDatabase::class.java, "fish_database")
+                    .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }
             }

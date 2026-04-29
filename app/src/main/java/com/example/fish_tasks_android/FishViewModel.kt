@@ -42,7 +42,8 @@ class FishViewModel(application: Application) : AndroidViewModel(application) {
         val now = System.currentTimeMillis()
         val activeTasks = allTasks.value.filter { it.status == "active" }
         for (task in activeTasks) {
-            val progress = (now - task.createdAt).toFloat() / (task.deadline - task.createdAt)
+            val total = (task.deadline - task.createdAt).coerceAtLeast(1)
+            val progress = (now - task.createdAt).toFloat() / total
             if (progress >= 1f && !task.expiredTriggered) {
                 expireTask(task)
                 break // Only show one at a time

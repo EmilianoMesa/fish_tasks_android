@@ -1,11 +1,13 @@
 package com.example.fish_tasks_android.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -15,7 +17,7 @@ import com.example.fish_tasks_android.R
 import com.example.fish_tasks_android.ui.screens.*
 
 sealed class Screen(val route: String, val titleRes: Int, val iconRes: Int) {
-    object Fish : Screen("fish", R.string.go_fish, R.drawable.fish_row0) // Using an existing drawable as icon placeholder
+    object Fish : Screen("fish", R.string.go_fish, R.drawable.blue_fish_profile)
     object Stats : Screen("stats", R.string.stats, R.drawable.fisherman)
     object History : Screen("history", R.string.history, R.drawable.back_arrow)
 }
@@ -34,7 +36,13 @@ fun FishApp(
                 val screens = listOf(Screen.Fish, Screen.Stats, Screen.History)
                 screens.forEach { screen ->
                     NavigationBarItem(
-                        icon = { Icon(painterResource(screen.iconRes), contentDescription = null) },
+                        icon = { 
+                            Icon(
+                                painter = painterResource(screen.iconRes), 
+                                contentDescription = null,
+                                modifier = Modifier.size(24.dp)
+                            ) 
+                        },
                         label = { Text(stringResource(screen.titleRes)) },
                         selected = currentDestination?.route == screen.route,
                         onClick = {
